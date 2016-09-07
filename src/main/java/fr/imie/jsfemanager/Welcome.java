@@ -1,11 +1,24 @@
 package fr.imie.jsfemanager;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 
+/**
+ * 
+ * @author Tidiane
+ *
+ */
 @ManagedBean(name = "welcome", eager = true)
+@RequestScoped
 public class Welcome {
 	
-	private String welcome = " Welcome to JSF !";
+	// A bean to be injected
+	@ManagedProperty(value = "#{welcomeMessage}")
+	private WelcomeMessage welcomeMessageBean;
+	
+	// Simple attribute
+	private String message;
 	
 	/**
 	 * The constructor
@@ -15,10 +28,26 @@ public class Welcome {
 	}
 	
 	/**
-	 * Get the welcome message
+	 * Gets the welcome message
+	 * 
 	 * @return
 	 */
 	public String getMessage (){
-		return welcome;
+		
+		if ( welcomeMessageBean != null){
+			message = welcomeMessageBean.getMessage();
+		}
+		
+		return message;
 	}
+	
+	/**
+	 * Sets the welcome message bean
+	 * 
+	 * @param welcomeMessageBean
+	 */
+	public void setWelcomeMessageBean(WelcomeMessage welcomeMessageBean) {
+		this.welcomeMessageBean = welcomeMessageBean;
+	}
+
 }
